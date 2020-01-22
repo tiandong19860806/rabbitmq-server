@@ -39,7 +39,7 @@ before_script:
 
 script:
   - make xref
-  - make ct-fast
+  - make ct-unit
 
 after_failure:
   - |
