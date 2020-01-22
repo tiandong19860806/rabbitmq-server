@@ -39,8 +39,7 @@ before_script:
 
 script:
   - make xref
-  - make ct-unit
-  - make ct-confirms_rejects
+  - make ct-fast
 
 after_failure:
   - |
