@@ -606,11 +606,14 @@ start_apps(Apps, RestartTypes) ->
 
 start_loaded_apps(Apps, RestartTypes) ->
     rabbit_prelaunch_conf:decrypt_config(Apps),
+    ct:pal("start_loaded_apps(): ~p, ~p", [Apps, RestartTypes]),
     OrderedApps = app_utils:app_dependency_order(Apps, false),
+    ct:pal("start_loaded_apps(): app_dependency_order: ~p", [OrderedApps]),
     case lists:member(rabbit, Apps) of
         false -> rabbit_boot_steps:run_boot_steps(Apps); %% plugin activation
         true  -> ok                    %% will run during start of rabbit app
     end,
+    ct:pal("start_loaded_apps(): start_applications", []),
     ok = app_utils:start_applications(OrderedApps,
                                       handle_app_error(could_not_start),
                                       RestartTypes).
